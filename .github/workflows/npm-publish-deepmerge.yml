@@ -14,8 +14,29 @@ on:
       - .github/workflows/npm-publish-deepmerge.yml
 
 jobs:
-  build:
+  build-staging:
     runs-on: ubuntu-latest
+    if: github.ref_name != 'master'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.6
+          run_install: true
+      - run: cd packages/deepmerge
+      - run: pnpm version prerelease --no-git-tag-version
+      - run: cd ${{ github.action_path }}
+      - run: pnpm exec nx run deepmerge:test
+      - run: pnpm exec nx run deepmerge:build --generateLockfile=true
+
+  build-prod:
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'master'
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -28,34 +49,10 @@ jobs:
           version: 8.6
           run_install: true
       - run: pnpm exec nx run deepmerge:test
-      - run: pnpm exec nx run deepmerge:test --configuration=ci
       - run: pnpm exec nx run deepmerge:build --generateLockfile=true
 
-  publish-npm-staging:
-    needs: build
+  publish-npm:
     runs-on: ubuntu-latest
-    if: github.ref_name != 'master'
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 19
-          registry-url: https://registry.npmjs.org/
-
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 8.6
-          run_install: true
-      - run: pnpm publish --filter @paultaku/deepmerge --tag rc --no-git-check --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-
-  publish-npm-prod:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref_name == 'master'
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
