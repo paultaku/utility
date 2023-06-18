@@ -5,13 +5,13 @@ name: Node.js Package
 
 on:
   push:
-    branches: [master]
+    branches: [master, develop]
     paths:
-        - packages/deepmerge/**
-        - package.json
-        - pnpm-lock.yaml
-        - pnpm-workspace.yaml
-        - .github/workflows/npm-publish-deepmerge.yml
+      - packages/deepmerge/**
+      - package.json
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
+      - .github/workflows/npm-publish-deepmerge.yml
 
 jobs:
   build:
@@ -22,8 +22,8 @@ jobs:
         with:
           node-version: 19
       - run: pnpm exec nx run deepmerge:test
-      - run: pnpm exec nx run deepmerge:test --configuration=ci 
-      - run: pnpm exec nx run deepmerge:build --generateLockfile=true 
+      - run: pnpm exec nx run deepmerge:test --configuration=ci
+      - run: pnpm exec nx run deepmerge:build --generateLockfile=true
 
   publish-npm:
     needs: build
@@ -35,6 +35,6 @@ jobs:
           node-version: 19
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: npm publish
+      - run: npm publish --tag rc --no-git-check
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
