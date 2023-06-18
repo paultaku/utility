@@ -27,10 +27,10 @@ jobs:
         with:
           version: 8.6
           run_install: true
-      - name: Define the package version
+      - name: Define The Package Version
         if: github.ref_name != 'master'
         run: cd packages/deepmerge;
-          pnpm version prerelease --no-git-tag-version;
+          pnpm version prerelease --preid=${{github.ref_name}} --no-git-tag-version;
           cd ../../;
 
       - run: pnpm exec nx run deepmerge:test
