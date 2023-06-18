@@ -31,7 +31,7 @@ jobs:
       - name: Define the package version
         run: cd packages/deepmerge;
           pnpm version prerelease --no-git-tag-version;
-          cd ${{ github.action_path }};
+          cd ../../;
 
       - run: pnpm exec nx run deepmerge:test
       - run: pnpm exec nx run deepmerge:build --generateLockfile=true
@@ -51,6 +51,9 @@ jobs:
         with:
           version: 8.6
           run_install: true
-      - run: pnpm publish --filter @paultaku/deepmerge --no-git-check --access public
+      - name: Pnpm Publish {ackage
+        run: cd dist;
+          pnpm publish --filter @paultaku/deepmerge --no-git-check --access public;
+
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
