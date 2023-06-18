@@ -36,7 +36,7 @@ jobs:
       - run: pnpm exec nx run deepmerge:test
       - run: pnpm exec nx run deepmerge:build --generateLockfile=true
       - name: Pnpm Publish Package
-        run: cd dist/deepmerge;
+        run: cd dist/packages/deepmerge;
           npm publish --no-git-check --access public --dry-run;
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
