@@ -40,7 +40,12 @@ jobs:
         with:
           node-version: 19
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm publish --tag rc --no-git-check
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.6
+          run_install: true
+      - run: pnpm publish --filter @paultaku/deepmerge
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
