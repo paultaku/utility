@@ -21,8 +21,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 19
-      - run: curl -fsSL https://get.pnpm.io/install.sh | sh -
-      - run: source ~/.bashrc
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.6
+          run_install: true
       - run: pnpm exec nx run deepmerge:test
       - run: pnpm exec nx run deepmerge:test --configuration=ci
       - run: pnpm exec nx run deepmerge:build --generateLockfile=true
