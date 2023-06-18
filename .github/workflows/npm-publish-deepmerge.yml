@@ -48,7 +48,7 @@ jobs:
         with:
           version: 8.6
           run_install: true
-      - run: pnpm publish --filter @paultaku/deepmerge --tag rc --no-git-check
+      - run: pnpm publish --filter @paultaku/deepmerge --tag rc --no-git-check  --dry-run --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
@@ -69,6 +69,6 @@ jobs:
         with:
           version: 8.6
           run_install: true
-      - run: pnpm publish --filter @paultaku/deepmerge --no-git-check
+      - run: pnpm publish --filter @paultaku/deepmerge --no-git-check --dry-run --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
