@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@paultaku/code-forge": ["packages/code-forge/src/index.ts"],
       "deepmerge": ["packages/deepmerge/src/index.ts"]
     }
   },
