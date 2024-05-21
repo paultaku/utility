@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "deepmerge": ["packages/deepmerge/src/index.ts"]
+      "deepmerge": ["packages/deepmerge/src/index.ts"],
+      "util": ["packages/util/src/index.ts"]
     }
   },
   "exclude": ["node_modules"]
