@@ -30,7 +30,6 @@
       }
     }
   },
-  "nxCloudAccessToken": "YTYxYTMwZjUtOTI4My00M2E4LTg3OTgtODcyYzhkOWUzZjY3fHJlYWQtd3JpdGU=",
   "pluginsConfig": {
     "@nx/js": {
       "analyzeSourceFiles": true
