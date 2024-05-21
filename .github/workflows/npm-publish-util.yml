@@ -1,7 +1,7 @@
 # This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
-name: Publish DeepMerge Npm Pacakge
+name: Publish Npm Pacakge (util)
 
 on:
   push:
@@ -29,14 +29,14 @@ jobs:
           run_install: true
       - name: Define The Package Version
         if: github.ref_name != 'master'
-        run: cd packages/deepmerge;
+        run: cd packages/util;
           pnpm version prerelease --preid=${{github.ref_name}} --no-git-tag-version;
           cd ../../;
 
-      - run: pnpm exec nx run deepmerge:test
-      - run: pnpm exec nx run deepmerge:build --generateLockfile=true
+      - run: pnpm exec nx run util:test
+      - run: pnpm exec nx run util:build --generateLockfile=true
       - name: Pnpm Publish Package
-        run: cd dist/packages/deepmerge;
+        run: cd dist/packages/util;
           npm publish --no-git-check --access public --dry-run;
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
