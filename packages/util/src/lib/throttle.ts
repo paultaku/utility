@@ -4,7 +4,6 @@ export function throttle(fn: VoidFunction, delay = 500): VoidFunction {
     return (...args) => {
         if (timer) return;
         timer = setTimeout(() => {
-            console.log('timer', timer);
             fn(...args);
             timer = null;
         }, delay);
